@@ -24,7 +24,7 @@ const itens = {
 
 // endpoint [get] READ ALL
 app.get("/itens", (req, res) => {
-  res.send(itens);
+  res.send(itens.Cafe.filter(Boolean));
 });
 
 // endpoint [get] READ one
