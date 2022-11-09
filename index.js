@@ -2,6 +2,9 @@ const express = require("express");
 const app = express();
 const port = 3000;
 
+// Sinalizar uso de Json
+app.use(express.json())
+
 app.get("/", (req, res) => {
   res.send("Hello Word!");
 });
@@ -12,15 +15,33 @@ app.get("/oi", (req, res) => {
 
 // listar itens
 const itens = {
-  Café: [
-    { Tipo: "Café Pelé", id: 1 },
-    { Tipo: "Café Pilão", id: 2 },
-    { Tipo: "Café Arábico", id: 3 },
+  Cafe: [
+    { Tipo: "Café Pelé", id: "1" },
+    { Tipo: "Café Pilão", id: "2" },
+    { Tipo: "Café Arábico", id: "3" },
   ],
 };
 
-// endpoint  READ ALL
+// endpoint [get] READ ALL
 app.get("/itens", (req, res) => {
+  res.send(itens);
+});
+
+// endpoint [get] READ one
+app.get("/itens/:id", (req, res) => {
+  const id = req.params.id;
+
+  const item = itens.Cafe.filter(function (a) {
+    console.log(id);
+    return a.id === id;
+});
+  res.send(item);
+});
+
+// endpoint [post] 
+app.post("/itens", (req, res) => {
+  const item = req.body;
+  itens.Cafe.push(item);
   res.send(itens);
 });
 
