@@ -38,6 +38,20 @@ app.get("/itens/:id", (req, res) => {
   res.send(item);
 });
 
+// endpoint [put] UPDATE 
+app.put("/itens/:id", (req, res) => {
+  const id = req.params.id;
+  itens.Cafe[id] = req.body;
+  res.send(itens);
+});
+
+// endpoint [delete] DELETE 
+app.delete("/itens/:id", (req, res) => {
+  const id = req.params.id;
+  delete itens.Cafe[id];
+  res.send(itens);
+});
+
 // endpoint [post] 
 app.post("/itens", (req, res) => {
   const item = req.body;
