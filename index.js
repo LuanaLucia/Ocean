@@ -1,64 +1,78 @@
 const express = require("express");
-const app = express();
-const port = 3000;
+const { MongoClient, ObjectId } = require("mongodb");
 
-// Sinalizar uso de Json
-app.use(express.json())
+const url = "mongodb://localhost:27017";
+const bancoDadosNome = "ocean_jornada_fullstack";
 
-app.get("/", (req, res) => {
-  res.send("Hello Word!");
-});
+async function main() {
 
-app.get("/oi", (req, res) => {
-  res.send("Helo Word!");
-});
+  const client = await MongoClient.connect(url);
+  const bancoDados = client.db(bancoDadosNome);
+  const collection = bancoDados.collection("itens");
 
-// listar itens
-const itens = {
-  Cafe: [
-    { Tipo: "Café Pelé", id: "1" },
-    { Tipo: "Café Pilão", id: "2" },
-    { Tipo: "Café Arábico", id: "3" },
-  ],
-};
+  const app = express();
+  const port = 3000;
 
-// endpoint [get] READ ALL
-app.get("/itens", (req, res) => {
-  res.send(itens.Cafe.filter(Boolean));
-});
+  // Sinalizar uso de Json
+  app.use(express.json());
 
-// endpoint [get] READ one
-app.get("/itens/:id", (req, res) => {
-  const id = req.params.id;
+  app.get("/", (req, res) => {
+    res.send("Hello Word!");
+  });
 
-  const item = itens.Cafe.filter(function (a) {
-    console.log(id);
-    return a.id === id;
-});
-  res.send(item);
-});
+  app.get("/oi", (req, res) => {
+    res.send("Helo Word!");
+  });
 
-// endpoint [put] UPDATE 
-app.put("/itens/:id", (req, res) => {
-  const id = req.params.id;
-  itens.Cafe[id] = req.body;
-  res.send(itens);
-});
+  // listar itens
+  const itens = {
+    Cafe: [
+      { Tipo: "Café Pelé", id: "1" },
+      { Tipo: "Café Pilão", id: "2" },
+      { Tipo: "Café Arábico", id: "3" },
+    ],
+  };
 
-// endpoint [delete] DELETE 
-app.delete("/itens/:id", (req, res) => {
-  const id = req.params.id;
-  delete itens.Cafe[id];
-  res.send(itens);
-});
+  // endpoint [get] READ ALL
+  app.get("/itens", (req, res) => {
+    res.send(itens.Cafe.filter(Boolean));
+  });
 
-// endpoint [post] 
-app.post("/itens", (req, res) => {
-  const item = req.body;
-  itens.Cafe.push(item);
-  res.send(itens);
-});
+  // endpoint [get] READ one
+  app.get("/itens/:id", (req, res) => {
+    const id = req.params.id;
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
-});
+    const item = itens.Cafe.filter(function (a) {
+      console.log(id);
+      return a.id === id;
+    });
+    res.send(item);
+  });
+
+  // endpoint [put] UPDATE
+  app.put("/itens/:id", (req, res) => {
+    const id = req.params.id;
+    itens.Cafe[id] = req.body;
+    res.send(itens);
+  });
+
+  // endpoint [delete] DELETE
+  app.delete("/itens/:id", (req, res) => {
+    const id = req.params.id;
+    delete itens.Cafe[id];
+    res.send(itens);
+  });
+
+  // endpoint [post]
+  app.post("/itens", (req, res) => {
+    const item = req.body;
+    itens.Cafe.push(item);
+    res.send(itens);
+  });
+
+  app.listen(port, () => {
+    console.log(`Example app listening on port ${port}`);
+  });
+}
+
+main();
