@@ -1,6 +1,7 @@
 const express = require("express");
 const { MongoClient, ObjectId } = require("mongodb");
 
+// const url = "mongodb://127.0.0.1:27017";
 const url = "mongodb+srv://admin:0SFg64mqRslmbPaX@cluster0.taniag6.mongodb.net/?retryWrites=true&w=majority";
 const bancoDadosNome = "ocean_jornada_fullstack";
 
@@ -72,7 +73,7 @@ async function main() {
     res.send("Item inserido");
   });
 
-  app.listen(port, () => {
+  app.listen(process.env.PORT || port, () => {
     console.log(`Example app listening on port ${port}`);
   });
   //0SFg64mqRslmbPaX
