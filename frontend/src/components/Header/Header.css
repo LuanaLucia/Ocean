@@ -1,0 +1,15 @@
+.Header{
+    margin: 0;
+    background-color: #0042be;
+    color: aliceblue;
+    height: 5rem;
+    display: flex;
+    align-items: center;
+}
+.Header a{
+    color: aliceblue;
+    text-decoration: none;
+    margin: 1rem;
+    font-size: 1.5rem;
+    
+}
