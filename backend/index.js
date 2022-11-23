@@ -1,5 +1,6 @@
 const express = require("express");
 const { MongoClient, ObjectId } = require("mongodb");
+const cors = require("cors");
 
 // const url = "mongodb://127.0.0.1:27017";
 const url = "mongodb+srv://admin:0SFg64mqRslmbPaX@cluster0.taniag6.mongodb.net/?retryWrites=true&w=majority";
@@ -14,6 +15,7 @@ async function main() {
   const app = express();
   const port = 3000;
 
+  app.use(cors());
   // Sinalizar uso de Json
   app.use(express.json());
 
