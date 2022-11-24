@@ -10,6 +10,9 @@ export const Api = {
         readAll: function () { 
             return this.endpoint() + "/" 
         },
+        create: function () { 
+            return this.endpoint() + "/" 
+        },
     },
 
     //GET
@@ -18,5 +21,16 @@ export const Api = {
             method: "GET",
         });
     },
+
+    //POST
+    buildApiPostRequest: function(url, body) {
+        return fetch(url, {
+            method: "POST",
+            body: JSON.stringify(body),
+            headers: new Headers({
+                "Content-type": "application/json",
+            })
+        })
+    }
 
 };
